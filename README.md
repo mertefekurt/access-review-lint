@@ -6,12 +6,12 @@
 
 Lint access review exports for stale admins and missing justification. It solves review drift by turning plain-text plans into deterministic CI-friendly findings.
 
-## Input Contract 4
+## Input Contract
 
 Accepts access review notes. The reader supports plain text, JSON, JSONL, and CSV so the
 tool can fit into scripts, CI jobs, and review exports.
 
-## CLI Walkthrough 4
+## CLI Walkthrough
 
 ```bash
 python -m pip install -e ".[dev]"
@@ -20,7 +20,7 @@ access-review-lint examples/sample.txt --json --fail-on medium
 python -m access_review_lint --help
 ```
 
-## Rule Surface 4
+## Rule Surface
 
 | Rule | Severity | Meaning |
 |---|---:|---|
@@ -28,7 +28,7 @@ python -m access_review_lint --help
 | `missing-justification` | medium | access justification is missing |
 | `broad-role` | low | broad role detected |
 
-## Validation Notes 4
+## Validation Notes
 
 ```bash
 ruff check .
