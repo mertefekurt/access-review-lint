@@ -1,41 +1,34 @@
-<img src="assets/readme-cover.svg" alt="Access Review Lint cover" width="100%" />
-
 # Access Review Lint
 
-Lint access review exports for stale admins and missing justification.
+Lint access review exports for stale admins and missing justification. The repository is intentionally plain: a small command, a visible rule surface, and enough examples to make the behavior inspectable.
 
-![stack](https://img.shields.io/badge/stack-Python-dc2626?style=flat-square) ![python](https://img.shields.io/badge/python-3.11-7c3aed?style=flat-square) ![license](https://img.shields.io/badge/license-MIT-0891b2?style=flat-square) ![ci](https://img.shields.io/badge/ci-GitHub%20Actions-b45309?style=flat-square)
+<img src="assets/readme-cover.svg" alt="Access Review Lint cover" width="100%" />
 
-## Workflow
+## Review checklist
 
-1. Collect the review notes or exported records.
-2. Run `access-review-lint` against the file.
-3. Read the findings in Markdown, or switch to JSON for automation.
-4. Fail CI only at the severity level you care about.
+- [ ] stale admin access detected (`stale-admin`, high)
+- [ ] access justification is missing (`missing-justification`, medium)
+- [ ] broad role detected (`broad-role`, low)
 
-## Checks
-
-| Rule | Severity | What it catches |
-| --- | --- | --- |
-| `stale-admin` | high | stale admin access detected |
-| `missing-justification` | medium | access justification is missing |
-| `broad-role` | low | broad role detected |
-
-## Command line
+## Command path
 
 ```bash
+git clone https://github.com/mertefekurt/access-review-lint.git
+cd access-review-lint
+python -m venv .venv
+source .venv/bin/activate
 python -m pip install -e ".[dev]"
 access-review-lint examples/sample.txt
-access-review-lint examples/sample.txt --json --fail-on medium
+access-review-lint examples/sample.txt --json
 ```
 
-## Sample risky input
+## Fixture worth keeping
 
 ```text
 user admin last_seen 2024 justification missing
 ```
 
-## Project shape
+## Files I look at first
 
 ```text
 .github/        CI workflow
