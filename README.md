@@ -1,48 +1,47 @@
-# access-review-lint
+<img src="assets/readme-cover.svg" alt="Access Review Lint cover" width="100%" />
 
-> Lint access review exports for stale admins and missing justification.
+# Access Review Lint
 
-## Risk note Overview
+Lint access review exports for stale admins and missing justification.
 
-Lint access review exports for stale admins and missing justification. It solves review drift by turning plain-text plans into deterministic CI-friendly findings.
+![stack](https://img.shields.io/badge/stack-Python-dc2626?style=flat-square) ![python](https://img.shields.io/badge/python-3.11-7c3aed?style=flat-square) ![license](https://img.shields.io/badge/license-MIT-0891b2?style=flat-square) ![ci](https://img.shields.io/badge/ci-GitHub%20Actions-b45309?style=flat-square)
 
-## Input Contract
+## Workflow
 
-Accepts access review notes. The reader supports plain text, JSON, JSONL, and CSV so the
-tool can fit into scripts, CI jobs, and review exports.
+1. Collect the review notes or exported records.
+2. Run `access-review-lint` against the file.
+3. Read the findings in Markdown, or switch to JSON for automation.
+4. Fail CI only at the severity level you care about.
 
-## CLI Walkthrough
+## Checks
+
+| Rule | Severity | What it catches |
+| --- | --- | --- |
+| `stale-admin` | high | stale admin access detected |
+| `missing-justification` | medium | access justification is missing |
+| `broad-role` | low | broad role detected |
+
+## Command line
 
 ```bash
 python -m pip install -e ".[dev]"
 access-review-lint examples/sample.txt
 access-review-lint examples/sample.txt --json --fail-on medium
-python -m access_review_lint --help
 ```
 
-## Rule Surface
-
-| Rule | Severity | Meaning |
-|---|---:|---|
-| `stale-admin` | high | stale admin access detected |
-| `missing-justification` | medium | access justification is missing |
-| `broad-role` | low | broad role detected |
-
-## Validation Notes
-
-```bash
-ruff check .
-pytest
-python -m access_review_lint --help
-```
-
-Example risky input:
+## Sample risky input
 
 ```text
 user admin last_seen 2024 justification missing
 ```
 
-Architecture: `cli.py` handles arguments, `core.py` reads and evaluates records, and
-`rules.py` keeps the project-specific policy explicit.
+## Project shape
 
-License: MIT.
+```text
+.github/        CI workflow
+examples/       sample inputs
+src/            package source
+tests/          test coverage
+.gitignore      project file
+pyproject.toml  package metadata
+```
